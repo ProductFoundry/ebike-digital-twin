@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Machine Propagation</title>
+    <!-- data-main attribute tells require.js to load
+             scripts/main.js after require.js loads. -->
+    <script data-main="main" src="lib/require.js"></script>
+    <script src="lib/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/app.css">
+</head>
+
+<body>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Machine Propagation</h3>
+            <div class="card-text">
+                <form>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input files" id="data">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </form>
+                <table id="assets" class="table">
+                    <thead class="thead-light">
+                        <th>
+                            ETRTO
+                        </th>
+                        <th>
+                            Timestamp
+                        </th>
+                        <th>
+                            Wheel Rotations
+                        </th>
+                        <th>
+                            Speed
+                        </th>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
