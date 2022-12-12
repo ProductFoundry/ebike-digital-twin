@@ -1,4 +1,4 @@
-/* Official ETRTO Code
+/* Official Bicycle Specification
  */
 
 define('BicycleSpecification', ['ETRTOTireSpecification'], function (ETRTOTireSpecification) {

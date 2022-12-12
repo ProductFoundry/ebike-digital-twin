@@ -1,4 +1,4 @@
-/* Vehicles whose positions are monitored
+/* eBike Speed
  */
 define('MachinePropagation', ['BicycleSpecification'], function (BicycleSpecification) {
 
