@@ -1,4 +1,48 @@
 define('main', ['DataFileReader', 'MachinePropagation'], function (DataFileReader, MachinePropagation) {
+  let timer;
+  $("#start").on("click", function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    const start = $(e.currentTarget);
+    if (start.hasClass("started")) {
+      start.removeClass("started");
+      start.addClass("btn-primary");
+      start.removeClass("btn-secondary");
+      start[0].innerHTML = "Start";
+      $("#pause").attr("disabled", true);
+      timer.stop();
+    } else {
+      start.addClass("started");
+      start.removeClass("btn-primary");
+      start.addClass("btn-secondary");
+      start[0].innerHTML = "Stop";
+
+      timer = startTimer(0, "timer");
+      $("#pause").removeAttr("disabled");
+      $("#pause").off("click");
+      $("#pause").on("click", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        const el = $(event.currentTarget);
+        const paused = el.hasClass("paused")
+        if (!paused) {
+          timer.pause();
+          el.addClass("paused");
+          el.removeClass("btn-primary");
+          el.addClass("btn-danger");
+          el[0].innerHTML = "Resume";
+        } else {
+          timer.resume();
+          el.removeClass("paused");
+          el.addClass("btn-primary");
+          el.removeClass("btn-danger");
+          el[0].innerHTML = "Pause";
+
+        }
+      })
+    }
+  })
+
   const fileInput = $(".files")
   const reportTable = $("#assets tbody");
   let mpArray = new Array();
@@ -8,7 +52,7 @@ define('main', ['DataFileReader', 'MachinePropagation'], function (DataFileReade
     const check = function () {
       const events = f.getEvents();
       if (events) {
-        events.forEach((event,i) => {
+        events.forEach((event, i) => {
           mpArray[i] = new MachinePropagation(event.bikeSpecification, event.timestamp, event.numRotation);
         });
         mpArray.forEach(a => {
