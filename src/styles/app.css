@@ -126,7 +126,7 @@ label.btn {
 }
 
 .right {
-    width: 33%;
+    width: 45%;
     display: inline-block;
 }
 .middle {
@@ -145,6 +145,6 @@ label.btn {
 }
 
 .left {
-    width: 25%;
+    width: 20%;
     display: inline-block;
 }

@@ -27,7 +27,7 @@ function startTimer(seconds, container) {
             // if( oncomplete) oncomplete();
         }
         const right = $(".right")[0];
-        $(right).append("<div>{ss: 0, sfg: 0, srg: 0, ssg: 0, cad: 0, tor:0, rpm: 0, curr: 0}</div>")
+        $(right).append("<div>"+m+":"+s+":"+mis+" - {ss: 0, sfg: 0, srg: 0, ssg: 0, cad: 0, tor:0, rpm: 0, curr: 0}</div>")
         return now;
     };
     obj.resume();
