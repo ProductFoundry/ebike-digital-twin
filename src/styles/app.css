@@ -3,6 +3,10 @@ h5 {
     padding: 2px;
 }
 
+html {
+    font-size: 12px;
+}
+
 .custom-file-input.files,
 .custom-file-label {
     max-width: 300px;
