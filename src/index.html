@@ -6,6 +6,7 @@
     <!-- data-main attribute tells require.js to load
              scripts/main.js after require.js loads. -->
     <script src="lib/jquery-3.6.0.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
     <!-- <script src="lib/gsap.min.js"></script>
     <script src="lib/Draggable.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
@@ -18,225 +19,256 @@
 </head>
 
 <body>
-    <div class="card">
-        <div class="card-body">
-            <!-- <h5 class="card-title">Machine Propagation</h5> -->
-            <div class="card-text">
-                <form>
-                    <div style="display:flex">
-                        <div class="left">
-                            <div class="row">
-                                <button class="col-4 btn btn-primary" id="start">Start</button>
-                                <span class="offset-2 col-4" id="timer">0:0:0</span>
-                            </div>
-                            <div class="row mt-2">
-                                <button class="col-4 btn btn-primary" id="pause" disabled>Pause</button>
-                                <button class="offset-2 col-4 btn btn-primary" id="save" disabled>Save</button>
-                            </div>
-                        </div>
-                        <div class="middle">
-                            <label for="btnradioss1" class="form-label inline">Support Setting</label>
-                            <div class="btn-group" role="group-ss" aria-label="Support Setting">
+    <div class="main">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-logger-tab" data-bs-toggle="pill"
+                    data-bs-target="#pills-logger" type="button" role="tab" aria-controls="pills-logger"
+                    aria-selected="true">Logger</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-runner-tab" data-bs-toggle="pill" data-bs-target="#pills-runner"
+                    type="button" role="tab" aria-controls="pills-runner" aria-selected="false">Runner</button>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="pills-logger" role="tabpanel" aria-labelledby="pills-logger-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Machine Propagation</h5> -->
+                        <div class="card-text">
+                            <form>
+                                <div style="display:flex">
+                                    <div class="left">
+                                        <div class="row">
+                                            <button class="col-4 btn btn-primary" id="start">Start</button>
+                                            <span class="offset-2 col-4" id="timer">0:0:0</span>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <button class="col-4 btn btn-primary" id="pause" disabled>Pause</button>
+                                            <button class="offset-2 col-4 btn btn-primary" id="save"
+                                                disabled>Save</button>
+                                        </div>
+                                    </div>
+                                    <div class="middle">
+                                        <label for="btnradioss1" class="form-label inline">Support Setting</label>
+                                        <div class="btn-group" role="group-ss" aria-label="Support Setting">
 
 
-                                <input type="radio" class="btn-check" name="btnradioss" id="btnradioss1"
-                                    autocomplete="off" checked value="1">
-                                <label class="btn btn-outline-primary" for="btnradioss1">1</label>
+                                            <input type="radio" class="btn-check" name="btnradioss" id="btnradioss1"
+                                                autocomplete="off" checked value="1">
+                                            <label class="btn btn-outline-primary" for="btnradioss1">1</label>
 
-                                <input type="radio" class="btn-check" name="btnradioss" id="btnradioss2"
-                                    autocomplete="off" value="2">
-                                <label class="btn btn-outline-primary" for="btnradioss2">2</label>
+                                            <input type="radio" class="btn-check" name="btnradioss" id="btnradioss2"
+                                                autocomplete="off" value="2">
+                                            <label class="btn btn-outline-primary" for="btnradioss2">2</label>
 
-                                <input type="radio" class="btn-check" name="btnradioss" id="btnradioss3"
-                                    autocomplete="off" value="3">
-                                <label class="btn btn-outline-primary" for="btnradioss3">3</label>
+                                            <input type="radio" class="btn-check" name="btnradioss" id="btnradioss3"
+                                                autocomplete="off" value="3">
+                                            <label class="btn btn-outline-primary" for="btnradioss3">3</label>
 
-                                <input type="radio" class="btn-check" name="btnradioss" id="btnradioss4"
-                                    autocomplete="off" value="4">
-                                <label class="btn btn-outline-primary" for="btnradioss4">4</label>
+                                            <input type="radio" class="btn-check" name="btnradioss" id="btnradioss4"
+                                                autocomplete="off" value="4">
+                                            <label class="btn btn-outline-primary" for="btnradioss4">4</label>
 
-                                <input type="radio" class="btn-check" name="btnradioss" id="btnradioss5"
-                                    autocomplete="off" value="5">
-                                <label class="btn btn-outline-primary" for="btnradioss5">5</label>
+                                            <input type="radio" class="btn-check" name="btnradioss" id="btnradioss5"
+                                                autocomplete="off" value="5">
+                                            <label class="btn btn-outline-primary" for="btnradioss5">5</label>
 
-                            </div>
+                                        </div>
 
-                            <label for="btnradiofg1" class="form-label inline">Selected Front Gear</label>
-                            <div class="btn-group" role="group-fg" aria-label="Front Gear">
+                                        <label for="btnradiofg1" class="form-label inline">Selected Front Gear</label>
+                                        <div class="btn-group" role="group-fg" aria-label="Front Gear">
 
 
-                                <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg1"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btnradiofg1">1</label>
+                                            <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg1"
+                                                autocomplete="off" checked>
+                                            <label class="btn btn-outline-primary" for="btnradiofg1">1</label>
 
-                                <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg2"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiofg2">2</label>
+                                            <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg2"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiofg2">2</label>
 
-                                <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg3"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiofg3">3</label>
+                                            <input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg3"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiofg3">3</label>
 
-                                <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradiofg4" autocomplete="off">
+                                            <!-- <input type="radio" class="btn-check" name="btnradio" id="btnradiofg4" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradiofg4">4</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="btnradiofg5" autocomplete="off">
                         <label class="btn btn-outline-primary" for="btnradiofg5">5</label> -->
 
-                            </div>
+                                        </div>
 
-                            <label for="btnradiorg1" class="form-label inline">Selected Rear Gear</label>
-                            <div class="btn-group" role="group-rg" aria-label="Rear Gear">
+                                        <label for="btnradiorg1" class="form-label inline">Selected Rear Gear</label>
+                                        <div class="btn-group" role="group-rg" aria-label="Rear Gear">
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg1"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btnradiorg1">1</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg1"
+                                                autocomplete="off" checked>
+                                            <label class="btn btn-outline-primary" for="btnradiorg1">1</label>
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg2"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiorg2">2</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg2"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiorg2">2</label>
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg3"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiorg3">3</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg3"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiorg3">3</label>
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg4"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiorg4">4</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg4"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiorg4">4</label>
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg5"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiorg5">5</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg5"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiorg5">5</label>
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg6"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiorg3">6</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg6"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiorg3">6</label>
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg7"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiorg4">7</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg7"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiorg4">7</label>
 
-                                <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg8"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiorg5">8</label>
+                                            <input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg8"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiorg5">8</label>
 
-                            </div>
+                                        </div>
 
-                            <label for="btnradiosg1" class="form-label inline">Selected Secondary Gear</label>
-                            <div class="btn-group" role="group-sg" aria-label="Rear Gear">
+                                        <label for="btnradiosg1" class="form-label inline">Selected Secondary
+                                            Gear</label>
+                                        <div class="btn-group" role="group-sg" aria-label="Rear Gear">
 
-                                <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg1"
-                                    autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btnradiosg1">1</label>
+                                            <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg1"
+                                                autocomplete="off" checked>
+                                            <label class="btn btn-outline-primary" for="btnradiosg1">1</label>
 
-                                <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg2"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiosg2">2</label>
+                                            <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg2"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiosg2">2</label>
 
-                                <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg3"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiosg3">3</label>
+                                            <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg3"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiosg3">3</label>
 
-                                <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg4"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiosg4">4</label>
+                                            <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg4"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiosg4">4</label>
 
-                                <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg5"
-                                    autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradiosg5">5</label>
+                                            <input type="radio" class="btn-check" name="btnradiosg" id="btnradiosg5"
+                                                autocomplete="off">
+                                            <label class="btn btn-outline-primary" for="btnradiosg5">5</label>
 
-                            </div>
-                        </div>
+                                        </div>
+                                    </div>
 
-                        <div class="right">
+                                    <div class="right">
 
+                                    </div>
+                                </div>
+
+                                <label for="cadenceSensor" class="form-label">Cadence</label>
+                                <div class="inputslider" data-value="40" data-unit="1" data-values="[0-110]"
+                                    id="cadenceSensor">
+                                    <input type="text" name="input" autocomplete="off" readonly>
+                                    <div class="area">
+                                        <div class="track"></div>
+                                        <div class="fill"></div>
+                                        <div class="knob"></div>
+                                    </div>
+                                    <div class="values"></div>
+                                </div>
+
+                                <label for="torqueSensor" class="form-label">Torque</label>
+                                <div class="inputslider" data-value="40" data-unit="5" data-values="[0-400]"
+                                    id="torqueSensor">
+                                    <input type="text" name="input" autocomplete="off" readonly>
+                                    <div class="area">
+                                        <div class="track"></div>
+                                        <div class="fill"></div>
+                                        <div class="knob"></div>
+                                    </div>
+                                    <div class="values"></div>
+                                </div>
+
+                                <label for="rpm" class="form-label">Wheel RPM</label>
+                                <div class="inputslider" data-value="40" data-unit="3" data-values="[0-265]"
+                                    id="rpmSensor">
+                                    <input type="text" name="input" autocomplete="off" readonly>
+                                    <div class="area">
+                                        <div class="track"></div>
+                                        <div class="fill"></div>
+                                        <div class="knob"></div>
+                                    </div>
+                                    <div class="values"></div>
+                                </div>
+
+                                <label for="motorCurrent" class="form-label">Motor Current</label>
+                                <div class="inputslider" data-value="40" data-unit="3" data-values="[0-250]"
+                                    id="currentSensor">
+                                    <input type="text" name="input" autocomplete="off" readonly>
+                                    <div class="area">
+                                        <div class="track"></div>
+                                        <div class="fill"></div>
+                                        <div class="knob"></div>
+                                    </div>
+                                    <div class="values"></div>
+                                </div>
+
+                                <div class="btn-group" role="group-events" aria-label="ASC Zone events">
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio1">Enter Zone</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                        autocomplete="off">
+                                    <label class="btn btn-outline-primary" for="btnradio2">Exit Zone</label>
+
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-                    <label for="cadenceSensor" class="form-label">Cadence</label>
-                    <div class="inputslider" data-value="40" data-unit="1" data-values="[0-110]" id="cadenceSensor">
-                        <input type="text" name="input" autocomplete="off" readonly>
-                        <div class="area">
-                            <div class="track"></div>
-                            <div class="fill"></div>
-                            <div class="knob"></div>
-                        </div>
-                        <div class="values"></div>
-                    </div>
-
-                    <label for="torqueSensor" class="form-label">Torque</label>
-                    <div class="inputslider" data-value="40" data-unit="5" data-values="[0-400]" id="torqueSensor">
-                        <input type="text" name="input" autocomplete="off" readonly>
-                        <div class="area">
-                            <div class="track"></div>
-                            <div class="fill"></div>
-                            <div class="knob"></div>
-                        </div>
-                        <div class="values"></div>
-                    </div>
-
-                    <label for="rpm" class="form-label">Wheel RPM</label>
-                    <div class="inputslider" data-value="40" data-unit="3" data-values="[0-265]" id="rpmSensor">
-                        <input type="text" name="input" autocomplete="off" readonly>
-                        <div class="area">
-                            <div class="track"></div>
-                            <div class="fill"></div>
-                            <div class="knob"></div>
-                        </div>
-                        <div class="values"></div>
-                    </div>
-
-                    <label for="motorCurrent" class="form-label">Motor Current</label>
-                    <div class="inputslider" data-value="40" data-unit="3" data-values="[0-250]" id="currentSensor">
-                        <input type="text" name="input" autocomplete="off" readonly>
-                        <div class="area">
-                            <div class="track"></div>
-                            <div class="fill"></div>
-                            <div class="knob"></div>
-                        </div>
-                        <div class="values"></div>
-                    </div>
-
-                    <div class="btn-group" role="group-events" aria-label="ASC Zone events">
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio1">Enter Zone</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio2">Exit Zone</label>
-
-                    </div>
-                </form>
+                </div>
             </div>
-            <!-- <div class="card-text">
-                <form>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input files" id="data">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
-                    </div>
-                </form>
-                <table id="assets" class="table">
-                    <thead class="thead-light">
-                        <th>
-                            ETRTO
-                        </th>
-                        <th>
-                            Timestamp
-                        </th>
-                        <th>
-                            Wheel Rotations
-                        </th>
-                        <th>
-                            Speed
-                        </th>
-                    </thead>
-                    <tbody>
+            <div class="tab-pane fade" id="pills-runner" role="tabpanel" aria-labelledby="pills-runner-tab">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-text">
+                            <form>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input files" id="data">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                </div>
+                            </form>
+                            <table id="assets" class="table">
+                                <thead class="thead-light">
+                                    <th>
+                                        ETRTO
+                                    </th>
+                                    <th>
+                                        Timestamp
+                                    </th>
+                                    <th>
+                                        Wheel Rotations
+                                    </th>
+                                    <th>
+                                        Speed
+                                    </th>
+                                </thead>
+                                <tbody>
 
-                    </tbody>
-                </table>
-            </div> -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </ul>
+            </div>
         </div>
-    </div>
 </body>
 <script data-main="main" src="lib/slider.js"></script>
 <script data-main="main" src="lib/timer.js"></script>
