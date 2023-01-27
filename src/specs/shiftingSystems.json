@@ -1,0 +1,9 @@
+{
+    "shiftingSystems" : [
+        {
+            "id": "sturmey archer 7 speed",
+            "type": "hub",
+            "availableGearRatios": "0.60,0.69,0.80,1,1.24,1.45,1.68"
+        }
+    ]
+}

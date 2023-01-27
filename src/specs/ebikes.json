@@ -1,0 +1,14 @@
+{
+    "ebikes": [
+        {
+            "id": "Ebike Model 1",
+            "name": "Ebike Model 1",
+            "frontSprockets": 45,
+            "rearSprockets": 18,
+            "rearShiftingSystemSpecId": "sturmey archer 7 speed",
+            "motorPosition": "middle",
+            "crankLength": 170,
+            "tireSpecId": "40-622"
+        }
+    ]
+}

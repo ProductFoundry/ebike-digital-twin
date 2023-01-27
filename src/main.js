@@ -1,4 +1,4 @@
-define('main', ['DataFileReader', 'MachinePropagation'], function (DataFileReader, MachinePropagation) {
+define('main', ['DataFileReader', 'MachinePropagation', 'SpecRealizer'], function (DataFileReader, MachinePropagation, SpecRealizer) {
   let timer;
   $("#start").on("click", function (e) {
     e.stopPropagation();
@@ -46,6 +46,7 @@ define('main', ['DataFileReader', 'MachinePropagation'], function (DataFileReade
   const fileInput = $(".files")
   const reportTable = $("#assets tbody");
   let mpArray = new Array();
+  const specRealizer = new SpecRealizer("Ebike Model 1");
   $(fileInput).on('change', (e) => {
     const { files } = e.target;
     const f = new DataFileReader(files[0]);

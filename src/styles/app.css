@@ -46,9 +46,11 @@ option {
 .inputslider {
     position: relative;
 }
+
 .inputslider input {
     display: none;
 }
+
 .inputslider .values {
     position: relative;
     margin-left: 14px;
@@ -57,6 +59,7 @@ option {
     margin-bottom: 8px;
     z-index: 1;
 }
+
 .inputslider .values span {
     position: absolute;
     top: 0;
@@ -73,15 +76,18 @@ option {
     z-index: 1;
     transition: all 0.2s ease;
 }
+
 .inputslider .values span.selected {
     background-color: #434a54;
     color: #fff;
     z-index: 2;
 }
+
 .inputslider .area {
     position: relative;
     height: 28px;
 }
+
 .inputslider .area .track {
     position: absolute;
     top: 50%;
@@ -93,6 +99,7 @@ option {
     z-index: 1;
     transform: translateY(-50%);
 }
+
 .inputslider .area .fill {
     position: absolute;
     top: 50%;
@@ -104,6 +111,7 @@ option {
     z-index: 2;
     transform: translateY(-50%);
 }
+
 .inputslider .area .knob {
     position: absolute;
     top: 0;
@@ -133,12 +141,14 @@ label.btn {
     width: 45%;
     display: inline-block;
 }
+
 .middle {
     width: 40%;
     display: inline-block;
 }
 
-.left, .middle {
+.left,
+.middle {
     float: left;
 }
 
@@ -151,4 +161,9 @@ label.btn {
 .left {
     width: 20%;
     display: inline-block;
+}
+
+.nav-pills, .nav-item, .tab-content {
+    border-radius: 0px !important;
+    --bs-nav-pills-border-radius: 0px !important;
 }
