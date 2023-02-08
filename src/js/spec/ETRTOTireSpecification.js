@@ -1,7 +1,7 @@
 /* Official ETRTO Code
  */
 
-define('ETRTOTireSpecification', function () {
+define(function () {
   function ETRTOTireSpecification(etrtoValue) {
     this.etrtoValue = etrtoValue;
     this.tireCircumference = this.calculateTireCircumference();

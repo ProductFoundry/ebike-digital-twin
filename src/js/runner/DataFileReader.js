@@ -1,6 +1,6 @@
 /* Reads csv data
  */
-define('DataFileReader', function () {
+define(function () {
 
   function DataFileReader(f) {
     if (f.type) {
