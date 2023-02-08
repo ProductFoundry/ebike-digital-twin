@@ -1,4 +1,4 @@
-/* Mapping of the physical EBike */
+/* Model of the physical EBike */
 define([], function () {
 
     function EBike() {        

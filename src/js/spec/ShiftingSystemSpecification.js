@@ -1,18 +1,13 @@
 /* Official Bicycle Specification
  */
 
-define(['text!./../../specs/shiftingSystems.json'], function (shiftingSystems) {
+define(['text!./../../specs/shiftingSystems.json', './Specification'], function (shiftingSystems, Specification) {
   function ShiftingSystemSpecification() {
-    this.shiftingSpecs = JSON.parse(shiftingSystems).shiftingSystems;
+    this.specs = JSON.parse(shiftingSystems).shiftingSystems;
   }
 
   ShiftingSystemSpecification.prototype.getSpec = function(shiftingSystemId) {
-    const shiftingSpec = this.shiftingSpecs.filter(e => e.id === shiftingSystemId)[0];
-    if (!shiftingSpec) {
-      alert("Invalid shiftingSystem spec ID");
-    } else {
-      return shiftingSpec;
-    }
+    Specification.call(this, shiftingSystemId)
   }
 
   return ShiftingSystemSpecification;

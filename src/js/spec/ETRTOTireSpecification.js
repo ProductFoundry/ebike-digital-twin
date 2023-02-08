@@ -4,7 +4,7 @@
 define(function () {
   function ETRTOTireSpecification(etrtoValue) {
     this.etrtoValue = etrtoValue;
-    this.tireCircumference = this.calculateTireCircumference();
+    // this.tireCircumference = this.calculateTireCircumference();
   }
 
   ETRTOTireSpecification.prototype.calculateTireCircumference = function () {
