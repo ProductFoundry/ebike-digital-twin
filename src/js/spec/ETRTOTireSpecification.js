@@ -1,16 +1,14 @@
 /* Official ETRTO Code
  */
 
-define(function () {
-  function ETRTOTireSpecification(etrtoValue) {
-    this.etrtoValue = etrtoValue;
-    // this.tireCircumference = this.calculateTireCircumference();
+define(['text!./../../specs/tires.json', './Specification'], function (tires, Specification) {
+  function ETRTOTireSpecification() {
+    this.specs = JSON.parse(tires).tires;
   }
 
-  ETRTOTireSpecification.prototype.calculateTireCircumference = function () {
-    const tireDiameter = parseInt(this.etrtoValue.split("-")[0]);
-    const rimDiameter = parseInt(this.etrtoValue.split("-")[1]);
-    return ((2 * tireDiameter) + rimDiameter) * 3.14;
+  ETRTOTireSpecification.prototype.getSpec = function (tireId) {
+    Specification.call(this, tireId)
   }
+
   return ETRTOTireSpecification;
 });
