@@ -1,9 +1,8 @@
 /* The Specification Prototype
  */
 
-define([], function (shiftingSystems, Specification) {
+define([], function (specs) {
   function Specification() {
-    this.specs = JSON.parse(shiftingSystems).shiftingSystems;
   }
 
   Specification.prototype.getSpec = function(specId) {
