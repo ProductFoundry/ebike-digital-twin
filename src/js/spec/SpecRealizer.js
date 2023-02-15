@@ -16,10 +16,16 @@ define('js/spec/SpecRealizer',
         ETRTOTire) {
 
         function SpecRealizer(ebikeSpecId) {
+            const bs = new BicycleSpecification();
             this.ebikeSpecId = ebikeSpecId;
-            this.ebikeSpec = new BicycleSpecification().getSpec(this.ebikeSpecId);
             this.ebike = new EBike();
-            this.realize(this.ebike, this.ebikeSpec);
+            const int = setInterval( () => {
+                if (bs.ebikeSpecs) {
+                    this.ebikeSpec = bs.getSpec(this.ebikeSpecId);
+                    this.realize(this.ebike, this.ebikeSpec);
+                    clearInterval(int);
+                }
+            }, 400)
         }
 
         SpecRealizer.prototype.realize = function (entity, spec) {
