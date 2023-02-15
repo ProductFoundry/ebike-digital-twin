@@ -1,7 +1,7 @@
 /* Official ETRTO Code
  */
 
-define(['text!./../../specs/tires.json', './Specification'], function (tires, Specification) {
+define('js/spec/ETRTOTireSpecification', ['text!./../../specs/tires.json', './Specification'], function (tires, Specification) {
   function ETRTOTireSpecification() {
     this.specs = JSON.parse(tires).tires;
   }

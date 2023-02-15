@@ -1,12 +1,13 @@
 /* Reads Specs and realizes the entity
  */
-define(['js/spec/BicycleSpecification',
-    'js/spec/ShiftingSystemSpecification',
-    'js/spec/ETRTOTireSpecification',
-    'js/mechanics/EBike',
-    'js/mechanics/ShiftingSystem',
-    'js/mechanics/ETRTOTire'
-],
+define('js/spec/SpecRealizer',
+    ['js/spec/BicycleSpecification',
+        'js/spec/ShiftingSystemSpecification',
+        'js/spec/ETRTOTireSpecification',
+        'js/mechanics/EBike',
+        'js/mechanics/ShiftingSystem',
+        'js/mechanics/ETRTOTire'
+    ],
     function (BicycleSpecification,
         ShiftingSystemSpecification,
         ETRTOTireSpecification,

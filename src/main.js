@@ -1,4 +1,4 @@
-define('main', ['js/runner/DataFileReader.js', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer'], function (DataFileReader, MachinePropagation, SpecRealizer) {
+define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer'], function (DataFileReader, MachinePropagation, SpecRealizer) {
   let timer;
   $("#start").on("click", function (e) {
     e.stopPropagation();

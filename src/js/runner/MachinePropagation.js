@@ -1,6 +1,6 @@
 /* eBike Speed
  */
-define(function () {
+define('js/runner/MachinePropagation', function () {
 
   function MachinePropagation(bike, timestamp, numRotations) {
     // this.bike = new BicycleSpecification(bike);

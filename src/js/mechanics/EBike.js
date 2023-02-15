@@ -1,7 +1,7 @@
 /* Model of the physical EBike */
-define([], function () {
+define('js/mechanics/EBike', [], function () {
 
-    function EBike() {        
+    function EBike() {
     }
 
     EBike.prototype.addAttribute = function (attribute, value) {

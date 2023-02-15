@@ -1,5 +1,5 @@
 /* EBike Tire */
-define([], function () {
+define('js/mechanics/ETRTOTire', [], function () {
 
     function ETRTOTire() {
     }

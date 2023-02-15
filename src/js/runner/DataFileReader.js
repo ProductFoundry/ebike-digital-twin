@@ -1,12 +1,12 @@
 /* Reads csv data
  */
-define(function () {
+define('js/runner/DataFileReader', [], function () {
 
   function DataFileReader(f) {
     if (f.type) {
-      let reader = new FileReader();      
+      let reader = new FileReader();
       reader.onload = () => {
-        this.textToEvents(reader.result);  
+        this.textToEvents(reader.result);
       };
       reader.readAsText(f);
 
@@ -19,7 +19,7 @@ define(function () {
       rawFile.onreadystatechange = () => {
         if (rawFile.readyState === 4) {
           if (rawFile.status === 200 || rawFile.status == 0) {
-            this.textToEvents(rawFile.responseText);            
+            this.textToEvents(rawFile.responseText);
           }
         }
       }
@@ -27,7 +27,7 @@ define(function () {
     }
   }
 
-  DataFileReader.prototype.textToEvents = function(text) {
+  DataFileReader.prototype.textToEvents = function (text) {
     this.events = text.split("\r\n").filter(l => l.length).map(l => {
       const e = l.split(",");
       return {

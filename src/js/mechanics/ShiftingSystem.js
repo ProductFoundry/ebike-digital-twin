@@ -1,7 +1,7 @@
 /* Model of the Shifting System */
-define([], function () {
+define('js/mechanics/ShiftingSystem', [], function () {
 
-    function ShiftingSystem() {        
+    function ShiftingSystem() {
     }
 
     ShiftingSystem.prototype.addAttribute = function (attribute, value) {
