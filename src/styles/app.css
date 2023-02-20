@@ -53,8 +53,8 @@ option {
 
 .inputslider .values {
     position: relative;
-    margin-left: 14px;
-    margin-right: 14px;
+    margin-left: 9px;
+    margin-right: 9px;
     height: 30px;
     margin-bottom: 8px;
     z-index: 1;
