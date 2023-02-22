@@ -1,7 +1,7 @@
 define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer'], function (DataFileReader, MachinePropagation, SpecRealizer) {
   let timer;
-  function getValues (dvalues, unit = 1) {
-    let values = [];
+  function getValues (dvalues, u) {
+    let values = [], unit = u ? u : 1;
     if (dvalues.indexOf("[") > -1) {
       const start = parseInt(dvalues.substring(1, dvalues.indexOf("-")));
       const end = parseInt(dvalues.substring(dvalues.indexOf("-") + 1, dvalues.length));
