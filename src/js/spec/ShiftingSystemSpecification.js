@@ -1,7 +1,7 @@
 /* Official Bicycle Specification
  */
 
-define('js/spec/ShiftingSystemSpecification', ['./Specification'], function (Specification) {
+define('js/spec/ShiftingSystemSpecification', ['js/spec/Specification'], function (Specification) {
   function ShiftingSystemSpecification() {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = (obj) => {

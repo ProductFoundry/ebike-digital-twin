@@ -1,7 +1,7 @@
 /* Official ETRTO Code
  */
 
-define('js/spec/ETRTOTireSpecification', [], function (Specification) {
+define('js/spec/ETRTOTireSpecification', ['js/spec/Specification'], function (Specification) {
   function ETRTOTireSpecification() {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = (obj) => {

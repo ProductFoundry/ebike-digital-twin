@@ -1,7 +1,7 @@
 /* Official Bicycle Specification
  */
 
-define('js/spec/BicycleSpecification', [], function () {
+define('js/spec/BicycleSpecification', ['js/spec/Specification'], function (Specification) {
   function BicycleSpecification() {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = (obj) => {
@@ -14,12 +14,7 @@ define('js/spec/BicycleSpecification', [], function () {
   }
 
   BicycleSpecification.prototype.getSpec = function (ebikeId) {
-    const ebikeSpec = this.ebikeSpecs.filter(e => e.id === ebikeId)[0];
-    if (!ebikeSpec) {
-      alert("Invalid ebike spec ID");
-    } else {
-      return ebikeSpec;
-    }
+    Specification.call(this, ebikeId)
   }
 
   return BicycleSpecification;
