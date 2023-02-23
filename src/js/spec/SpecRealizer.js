@@ -20,7 +20,7 @@ define('js/spec/SpecRealizer',
             this.ebikeSpecId = ebikeSpecId;
             this.ebike = new EBike();
             const int = setInterval( () => {
-                if (bs.ebikeSpecs) {
+                if (bs.specs) {
                     this.ebikeSpec = bs.getSpec(this.ebikeSpecId);
                     this.realize(this.ebike, this.ebikeSpec);
                     clearInterval(int);
