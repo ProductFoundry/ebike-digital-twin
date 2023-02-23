@@ -27,7 +27,7 @@ function startTimer(seconds, container) {
             obj.resume = function () { };
             // if( oncomplete) oncomplete();
         }
-        const right = $(".right")[0];
+        const right = $(".digital-twin .right")[0];
         const ss = $("input:radio[name ='btnradioss']:checked").val();
         const sfg = $("input:radio[name ='btnradiofg']:checked").val();
         const srg = $("input:radio[name ='btnradiorg']:checked").val();
