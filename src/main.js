@@ -1,11 +1,11 @@
 define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer'], function (DataFileReader, MachinePropagation, SpecRealizer) {
   let timer;
-  function getValues (dvalues, u) {
+  function getValues(dvalues, u) {
     let values = [], unit = u ? u : 1;
     if (dvalues.indexOf("[") > -1) {
       const start = parseInt(dvalues.substring(1, dvalues.indexOf("-")));
       const end = parseInt(dvalues.substring(dvalues.indexOf("-") + 1, dvalues.length));
-      for (let i = start; i <= end; i+=unit) {
+      for (let i = start; i <= end; i += unit) {
         values.push(i);
       }
     } else {
@@ -13,7 +13,37 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
     }
     return values;
   }
-  
+
+  function _conditionalReturn(value, func) {
+    return value || value === 0 ? func(value) : func;
+  };
+
+  function mapRange(inMin, inMax, outMin, outMax, value) {
+    var inRange = inMax - inMin,
+      outRange = outMax - outMin;
+    return _conditionalReturn(value, function (value) {
+      return outMin + ((value - inMin) / inRange * outRange || 0);
+    });
+  };
+
+  function snapTo(values, relativeValue) {
+    let smallestDiff = null, closest;
+    values.forEach((v, i) => {
+      const diff = Math.abs(relativeValue - v);
+      if (smallestDiff === null) {
+        smallestDiff = diff;
+        closest = v;
+      } else {
+        if (diff < smallestDiff) {
+          smallestDiff = diff;
+          closest = v;
+        }
+      }
+     
+    })
+    return closest;
+  }
+
   document.querySelectorAll('.inputslider').forEach(
     (inputslider) => {
       let unit = 1;
@@ -21,7 +51,7 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
         unit = parseInt(inputslider.dataset.unit);
       }
       let values = getValues(inputslider.dataset.values, unit);
-      
+
       let value = parseFloat(inputslider.dataset.value),
         min = parseFloat(values.first()),
         max = parseFloat(values.last()),
@@ -29,28 +59,27 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
         area = inputslider.querySelector('.area'),
         knob = inputslider.querySelector('.knob'),
         fill = inputslider.querySelector('.fill');
-      
-  
+
+
       values.forEach(
         (value, i) => {
           values[i] = value = parseFloat(value);
-  
+
           let span = document.createElement('span');
           span.innerText = value;
           span.setAttribute('data-value', value);
-  
+
           if (i == 0) {
             span.addClass('selected');
             input.value = value;
           }
-          
-          debugger;
-          span.style.left = gsap.utils.mapRange(min, max, 0, 100, value) + '%';
-  
+
+          span.style.left = mapRange(min, max, 0, 100, value) + '%';
+
           inputslider.querySelector('.values').appendChild(span);
         }
       );
-  
+
       Draggable.create(knob, {
         type: 'x',
         edgeResistance: 1,
@@ -66,44 +95,47 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
       );
     }
   );
-  
+
+
+
   function handleInputslider(instance, snap, unit) {
+
     let inputslider = instance.target.closest('.inputslider'),
       fill = inputslider.querySelector('.fill'),
       values = getValues(inputslider.dataset.values, unit),
       min = parseFloat(values.first()),
       max = parseFloat(values.last()),
-      xPercent = gsap.utils.mapRange(0, instance.maxX, 0, 100, instance.x),
-      relativeValue = gsap.utils.mapRange(0, instance.maxX, min, max, instance.x),
-      finalValue = gsap.utils.snap(values, relativeValue),
-      snapX = gsap.utils.mapRange(min, max, 0, instance.maxX, finalValue),
-      fillWidth = gsap.utils.mapRange(0, instance.maxX, 0, 100, snapX);
-  
-    if (snap) {
-      gsap.to(instance.target, { duration: .2, x: snapX });
-      gsap.to(fill, { duration: .2, width: fillWidth + '%' });
-    } else {
-      values.forEach(
-        (value, i) => {
-          values[i] = parseFloat(value);
+      xPercent = mapRange(0, instance.maxX, 0, 100, instance.x),
+      relativeValue = mapRange(0, instance.maxX, min, max, instance.x),
+      finalValue = snapTo(values, relativeValue),
+      snapX = mapRange(min, max, 0, instance.maxX, finalValue),
+      fillWidth = mapRange(0, instance.maxX, 0, 100, snapX);
+
+    // if (snap) {
+    //   gsap.to(instance.target, { duration: .2, x: snapX });
+    //   gsap.to(fill, { duration: .2, width: fillWidth + '%' });
+    // } else {
+    values.forEach(
+      (value, i) => {
+        values[i] = parseFloat(value);
+      }
+    );
+
+    fill.style.width = xPercent + '%';
+      console.log(finalValue);
+    inputslider.querySelectorAll('.values span').forEach(
+      (span) => {
+        if (parseFloat(span.dataset.value) == finalValue) {
+          span.addClass('selected');
+        } else {
+          span.removeClass('selected');
         }
-      );
-  
-      fill.style.width = xPercent + '%';
-  
-      inputslider.querySelectorAll('.values span').forEach(
-        (span) => {
-          if (parseFloat(span.dataset.value) == finalValue) {
-            span.addClass('selected');
-          } else {
-            span.removeClass('selected');
-          }
-        }
-      );
-  
-      inputslider.querySelector('input').value = finalValue;
-    }
+      }
+    );
+
+    inputslider.querySelector('input').value = finalValue;
   }
+  // }
   $("#start").on("click", function (e) {
     e.stopPropagation();
     e.preventDefault();
