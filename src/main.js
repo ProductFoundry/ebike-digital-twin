@@ -1,4 +1,4 @@
-define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer'], function (DataFileReader, MachinePropagation, SpecRealizer) {
+define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer', 'js/tools/Draggable'], function (DataFileReader, MachinePropagation, SpecRealizer, Draggable) {
   let timer;
   function getValues(dvalues, u) {
     let values = [], unit = u ? u : 1;
@@ -80,7 +80,7 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
         }
       );
 
-      Draggable.create(knob, {
+      Draggable.default.create(knob, {
         type: 'x',
         edgeResistance: 1,
         bounds: area,
