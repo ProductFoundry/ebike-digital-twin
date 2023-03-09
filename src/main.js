@@ -1,4 +1,4 @@
-define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer', 'js/tools/Draggable', 'js/tools/gsap'],
+define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer', 'js/tools/Draggable', 'js/tools/Gsap'],
   function (DataFileReader, MachinePropagation, SpecRealizer, Draggable, gsap) {
     gsap.gsap.registerPlugin(Draggable);
     let timer;
@@ -16,35 +16,6 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
       return values;
     }
 
-    // function _conditionalReturn(value, func) {
-    //   return value || value === 0 ? func(value) : func;
-    // };
-
-    // function mapRange(inMin, inMax, outMin, outMax, value) {
-    //   var inRange = inMax - inMin,
-    //     outRange = outMax - outMin;
-    //   return _conditionalReturn(value, function (value) {
-    //     return outMin + ((value - inMin) / inRange * outRange || 0);
-    //   });
-    // };
-
-    // function snapTo(values, relativeValue) {
-    //   let smallestDiff = null, closest;
-    //   values.forEach((v, i) => {
-    //     const diff = Math.abs(relativeValue - v);
-    //     if (smallestDiff === null) {
-    //       smallestDiff = diff;
-    //       closest = v;
-    //     } else {
-    //       if (diff < smallestDiff) {
-    //         smallestDiff = diff;
-    //         closest = v;
-    //       }
-    //     }
-
-    //   })
-    //   return closest;
-    // }
 
     document.querySelectorAll('.inputslider').forEach(
       (inputslider) => {
