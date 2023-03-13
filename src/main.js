@@ -1,4 +1,8 @@
-define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/spec/SpecRealizer', 'js/tools/Draggable', 'js/tools/Gsap'],
+define('main', ['js/runner/DataFileReader',
+  'js/runner/MachinePropagation',
+  'js/spec/SpecRealizer',
+  'js/tools/Draggable',
+  'js/tools/Gsap'],
   function (DataFileReader, MachinePropagation, SpecRealizer, Draggable, gsap) {
     gsap.gsap.registerPlugin(Draggable);
     let timer;
@@ -95,7 +99,6 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
         );
       }
       fill.style.width = xPercent + '%';
-      console.log(finalValue);
       inputslider.querySelectorAll('.values span').forEach(
         (span) => {
           if (parseFloat(span.dataset.value) == finalValue) {
@@ -108,7 +111,6 @@ define('main', ['js/runner/DataFileReader', 'js/runner/MachinePropagation', 'js/
 
       inputslider.querySelector('input').value = finalValue;
     }
-    // }
     $("#start").on("click", function (e) {
       e.stopPropagation();
       e.preventDefault();

@@ -1,7 +1,7 @@
 /* The Specification Prototype
  */
 
-define('js/spec/Specification', [], function (specs) {
+define('js/spec/Specification', [], function () {
   function Specification() {
   }
 
