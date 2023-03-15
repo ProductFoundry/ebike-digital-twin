@@ -1,11 +1,15 @@
 define('main', ['js/runner/DataFileReader',
-  'js/runner/MachinePropagation',
+  'js/mechanics/MachinePropagation',
   'js/spec/SpecRealizer',
   'js/tools/Draggable',
-  'js/tools/Gsap'],
-  function (DataFileReader, MachinePropagation, SpecRealizer, Draggable, gsap) {
+  'js/tools/Gsap',
+  'js/spec/BicycleSpecification'
+],
+  function (DataFileReader, MachinePropagation, SpecRealizer, Draggable, gsap, BicycleSpecification) {
     gsap.gsap.registerPlugin(Draggable);
+    const bs = new BicycleSpecification();
     let timer;
+
     function getValues(dvalues, u) {
       let values = [], unit = u ? u : 1;
       if (dvalues.indexOf("[") > -1) {
@@ -72,8 +76,6 @@ define('main', ['js/runner/DataFileReader',
         );
       }
     );
-
-
 
     function handleInputslider(instance, snap, unit) {
 
@@ -154,10 +156,21 @@ define('main', ['js/runner/DataFileReader',
       }
     })
 
+    const ebikeSelector = $("#ebike-model-selector");
+    ebikeSelector.append("<option value=''></option>");
+    const models = bs.getAllSpecs();
+    models.forEach(m => ebikeSelector.append("<option value='" + m.name + "'>" + JSON.stringify(m) + "</option>"));
+    ebikeSelector.on("change", function (e) {
+      const optionSelected = $(this).val();
+      const specRealizer = new SpecRealizer(optionSelected);
+      const ebike = specRealizer.getEbikeEntity();
+      console.log(ebike.getPrimaryGearRatio())
+    })
+
     const fileInput = $(".files")
     const reportTable = $("#assets tbody");
     let mpArray = new Array();
-    const specRealizer = new SpecRealizer("Ebike Model 1");
+
     $(fileInput).on('change', (e) => {
       const { files } = e.target;
       const f = new DataFileReader(files[0]);

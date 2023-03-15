@@ -19,13 +19,8 @@ define('js/spec/SpecRealizer',
             const bs = new BicycleSpecification();
             this.ebikeSpecId = ebikeSpecId;
             this.ebike = new EBike();
-            const int = setInterval( () => {
-                if (bs.specs) {
-                    this.ebikeSpec = bs.getSpec(this.ebikeSpecId);
-                    this.realize(this.ebike, this.ebikeSpec);
-                    clearInterval(int);
-                }
-            }, 400)
+            this.ebikeSpec = bs.getSpec(this.ebikeSpecId);
+            this.ebike = this.realize(this.ebike, this.ebikeSpec);
         }
 
         SpecRealizer.prototype.realize = function (entity, spec) {
@@ -33,15 +28,16 @@ define('js/spec/SpecRealizer',
             attributes.forEach(a => {
                 if (a.indexOf("SpecId") > -1) {
                     const Specification = this.getSpecClass(a);
-                    const specification = new Specification();
+                    const specification = new Specification().getSpec(spec[a]);
                     const Entity = this.getEntityClass(a);
                     const aName = a.substring(0, a.indexOf("SpecId"));
-                    entity.addAttribute(aName, new Entity());
-                    this.realize(entity[aName], specification);
+                    const child = this.realize(new Entity(), specification);
+                    entity.addAttribute(aName, child);
                 } else {
                     entity.addAttribute(a, spec[a]);
                 }
             })
+            return entity;
         }
 
         SpecRealizer.prototype.specMap = {
@@ -68,6 +64,10 @@ define('js/spec/SpecRealizer',
             keys.forEach(k => entity[k] = spec[k]);
             return entity;
         };
+
+        SpecRealizer.prototype.getEbikeEntity = function () {
+            return this.ebike;
+        }
 
         return SpecRealizer;
     });
