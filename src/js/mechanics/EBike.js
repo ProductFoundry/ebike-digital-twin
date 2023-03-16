@@ -10,6 +10,8 @@ define('js/mechanics/EBike', [], function () {
         this.motorPosition = null;
         this.crankLength = null;
         this.tireSpecId = null;
+        this.supportSetting = null;
+        this.availableSupportSettings = null;
     }
 
     EBike.prototype.addAttribute = function (attribute, value) {

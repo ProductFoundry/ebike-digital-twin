@@ -159,12 +159,44 @@ define('main', ['js/runner/DataFileReader',
     const ebikeSelector = $("#ebike-model-selector");
     ebikeSelector.append("<option value=''></option>");
     const models = bs.getAllSpecs();
-    models.forEach(m => ebikeSelector.append("<option value='" + m.name + "'>" + JSON.stringify(m) + "</option>"));
+    models.forEach(m => ebikeSelector.append("<option value='" + JSON.stringify(m) + "'>" + m.name + "</option>"));
     ebikeSelector.on("change", function (e) {
-      const optionSelected = $(this).val();
-      const specRealizer = new SpecRealizer(optionSelected);
+      const optionSelected = JSON.parse($(this).val());
+      const specRealizer = new SpecRealizer(optionSelected.name);
       const ebike = specRealizer.getEbikeEntity();
-      console.log(ebike.getPrimaryGearRatio())
+      $(".selected-model")[0].innerHTML = JSON.stringify(ebike, null, 2);
+      console.log(ebike.getPrimaryGearRatio());
+      if (!ebike.rearShiftingSystem || ebike.rearShiftingSystem.type === "derailleur") {
+        $(".secondary-gear").addClass("d-none");
+      } else {
+        $(".secondary-gear").removeClass("d-none");
+        if (ebike.rearShiftingSystem.type === "hub") {
+          const availableSG = ebike.rearShiftingSystem.availableGearRatios.split(",");
+          $("div.secondary-gear").empty();
+          availableSG.forEach((sg, i) => {
+            $("div.secondary-gear").append(
+              '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + i + '"' +
+              'autocomplete="off" checked value="' + sg + '" >' +
+              '<label class="btn btn-outline-primary" for="btnradiosg' + i + '">' + i + " " + sg + '</label>'
+            )
+          })
+          $(".secondary-gear-input").on("change", function () {
+            ebike.rearShiftingSystem.selectedGear = Integer.parseInt(this.value);
+          })
+        }
+      }
+      const availableSS = ebike.availableSupportSettings.split(",");
+      $(".support-setting").empty();
+      availableSS.forEach(ss => {
+        $(".support-setting").append(
+          '<input type="radio" class="btn-check support-setting-input" name="btnradioss" id="btnradioss' + ss + '"' +
+          'autocomplete = "off" checked value = "' + ss + '" >' +
+          '<label class="btn btn-outline-primary" for="btnradioss' + ss + '">' + ss + '</label>'
+        )
+      })
+      $(".support-setting-input").on("change", function () {
+        ebike.supportSetting = Integer.parseInt(this.value);
+      })
     })
 
     const fileInput = $(".files")

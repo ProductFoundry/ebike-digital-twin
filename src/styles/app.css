@@ -167,3 +167,19 @@ label.btn {
     border-radius: 0px !important;
     --bs-nav-pills-border-radius: 0px !important;
 }
+
+.selected-model {
+    font-size: 8px;
+    white-space: pre;
+    max-height: 150px;
+    overflow: auto;
+    width: 90%;
+}
+
+.secondary-gear label {
+    font-size: 9px;
+    width: 30px;
+    word-wrap: normal;
+    text-align: center;
+    padding: 3px;
+}

@@ -5,6 +5,7 @@ define('js/mechanics/ShiftingSystem', [], function () {
         this.id = null;
         this.type = null;
         this.availableGearRatios = null;
+        this.selectedGear = null;
     }
 
     ShiftingSystem.prototype.addAttribute = function (attribute, value) {
@@ -12,7 +13,15 @@ define('js/mechanics/ShiftingSystem', [], function () {
     }
 
     ShiftingSystem.prototype.getSecondaryGearRatio = function () {
-        
+        if (this.type === "hub" || this.type === "box") {
+            return this.selectedGear;
+        } else if (this.type === "derailleur") {
+            return 1;
+        }
+    }
+
+    ShiftingSystem.prototype.setSelectedGear = function (selectedGear) {
+        this.selectedGear = selectedGear;
     }
 
 

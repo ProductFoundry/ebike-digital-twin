@@ -24,7 +24,7 @@ define('js/spec/SpecRealizer',
         }
 
         SpecRealizer.prototype.realize = function (entity, spec) {
-            const attributes = Object.keys(spec).filter(k => k !== "id");
+            const attributes = Object.keys(spec);
             attributes.forEach(a => {
                 if (a.indexOf("SpecId") > -1) {
                     const Specification = this.getSpecClass(a);
@@ -32,6 +32,7 @@ define('js/spec/SpecRealizer',
                     const Entity = this.getEntityClass(a);
                     const aName = a.substring(0, a.indexOf("SpecId"));
                     const child = this.realize(new Entity(), specification);
+                    entity.addAttribute(a, spec[a]);
                     entity.addAttribute(aName, child);
                 } else {
                     entity.addAttribute(a, spec[a]);
