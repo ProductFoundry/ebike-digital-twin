@@ -162,27 +162,65 @@ define('main', ['js/runner/DataFileReader',
     models.forEach(m => ebikeSelector.append("<option value='" + JSON.stringify(m) + "'>" + m.name + "</option>"));
     ebikeSelector.on("change", function (e) {
       const optionSelected = JSON.parse($(this).val());
-      const specRealizer = new SpecRealizer(optionSelected.name);
+      const specRealizer = new SpecRealizer(optionSelected.id);
       const ebike = specRealizer.getEbikeEntity();
+      ebike.init();
       $(".selected-model")[0].innerHTML = JSON.stringify(ebike, null, 2);
-      console.log(ebike.getPrimaryGearRatio());
-      if (!ebike.rearShiftingSystem || ebike.rearShiftingSystem.type === "derailleur") {
-        $(".secondary-gear").addClass("d-none");
-      } else {
-        $(".secondary-gear").removeClass("d-none");
-        if (ebike.rearShiftingSystem.type === "hub") {
-          const availableSG = ebike.rearShiftingSystem.availableGearRatios.split(",");
-          $("div.secondary-gear").empty();
-          availableSG.forEach((sg, i) => {
-            $("div.secondary-gear").append(
-              '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + i + '"' +
-              'autocomplete="off" checked value="' + sg + '" >' +
-              '<label class="btn btn-outline-primary" for="btnradiosg' + i + '">' + i + " " + sg + '</label>'
-            )
+      // Hide all
+      $(".secondary-gear").addClass("d-none");
+      $(".derailleur").addClass("d-none");
+      $(".secondary-gear").addClass("d-none");
+      if (ebike.rearShiftingSystem) {
+        if (ebike.rearShiftingSystem.type === "derailleur") {
+          $(".rear-derailleur").removeClass("d-none");
+          $("div.rear-derailleur").empty();
+          const cassette = ebike.rearShiftingSystem.cassette.split(",");
+          cassette.forEach(function (t, i) {
+            $("div.rear-derailleur").append(
+              '<input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg1" ' +
+              'autocomplete="off" checked value="' + t + '"> ' +
+              '<label class="btn btn-outline-primary" for="btnradiorg1">' + (i + 1) + " " + t + '</label> ');
+
           })
-          $(".secondary-gear-input").on("change", function () {
-            ebike.rearShiftingSystem.selectedGear = Integer.parseInt(this.value);
+
+
+          $(".front-derailleur").addClass("d-none");
+          $(".secondary-gear").addClass("d-none");
+        } else {
+          // Hub / Box
+          $(".secondary-gear").removeClass("d-none");
+          $(".rear.derailleur").addClass("d-none");
+          if (ebike.rearShiftingSystem.type === "hub") {
+            const availableSG = ebike.rearShiftingSystem.availableGearRatios.split(",");
+            $("div.secondary-gear").empty();
+            availableSG.forEach((sg, i) => {
+              $("div.secondary-gear").append(
+                '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + (i + 1) + '"' +
+                'autocomplete="off" checked value="' + sg + '" >' +
+                '<label class="btn btn-outline-primary" for="btnradiosg' + (i + 1) + '">' + (i + 1) + " " + sg + '</label>'
+              )
+            })
+            $(".secondary-gear-input").on("change", function () {
+              ebike.rearShiftingSystem.selectedGear = Float.parseFloat(this.value);
+            })
+          }
+        }
+      }
+      if (ebike.frontShiftingSystem) {
+        if (ebike.frontShiftingSystem.type === "derailleur") {
+          $(".front-derailleur").removeClass("d-none");
+          $(".secondary-gear").addClass("d-none");
+          const cassette = ebike.frontShiftingSystem.cassette.split(",");
+          $("div.front-derailleur").empty();
+          cassette.forEach(function (t, i) {
+            $("div.front-derailleur").append(
+              '<input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg' + (i + 1) + '" ' +
+              'autocomplete="off" checked value="' + t + '"> ' +
+              '<label class="btn btn-outline-primary" for="btnradiofg' + (i + 1) + '">' + (i + 1) + " " + t + '</label> ');
           })
+        } else {
+          // Hub or box in the front
+          $(".front-derailleur").addClass("d-none");
         }
       }
       const availableSS = ebike.availableSupportSettings.split(",");

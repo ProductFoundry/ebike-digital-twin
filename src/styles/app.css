@@ -53,8 +53,8 @@ option {
 
 .inputslider .values {
     position: relative;
-    margin-left: 9px;
-    margin-right: 9px;
+    /* margin-left: 9px;
+    margin-right: 9px; */
     height: 30px;
     margin-bottom: 8px;
     z-index: 1;
@@ -176,10 +176,14 @@ label.btn {
     width: 90%;
 }
 
-.secondary-gear label {
+.secondary-gear label, .derailleur label {
     font-size: 9px;
     width: 30px;
     word-wrap: normal;
     text-align: center;
     padding: 3px;
+}
+
+.derailleur label { 
+    width: 20px;
 }

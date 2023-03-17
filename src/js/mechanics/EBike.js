@@ -10,19 +10,23 @@ define('js/mechanics/EBike', [], function () {
         this.motorPosition = null;
         this.crankLength = null;
         this.tireSpecId = null;
+        this.tire = null;
         this.supportSetting = null;
         this.availableSupportSettings = null;
+        this.cadence = null;
+        this.torque = null;
+        this.rpm = null;
     }
 
     EBike.prototype.addAttribute = function (attribute, value) {
         this[attribute] = value;
     }
 
-    EBike.prototype.getPrimaryGearRatio = function () {
+    EBike.prototype.init = function () {
         if (this.rearShiftingSystem) {
             if (this.rearShiftingSystem.type === "hub" || this.rearShiftingSystem.type === "box") {
                 if (this.frontSprockets && this.rearSprockets) {
-                    return this.frontSprockets / this.rearSprockets;
+                    this.primaryGearRatio = this.frontSprockets / this.rearSprockets;
                 } else {
                     console.error("Front and rear sprocket specification not available");
                 }
@@ -34,11 +38,12 @@ define('js/mechanics/EBike', [], function () {
         } else {
             // Single speed 
             if (this.frontSprockets && this.rearSprockets) {
-                return this.frontSprockets / this.rearSprockets;
+                this.primaryGearRatio = this.frontSprockets / this.rearSprockets;
             } else {
                 console.error("Front and rear sprocket specification not available");
             }
         }
+        this.tire.init();
 
     }
 
