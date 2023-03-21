@@ -44,12 +44,14 @@ define('js/spec/SpecRealizer',
         SpecRealizer.prototype.specMap = {
             "rearShiftingSystemSpecId": ShiftingSystemSpecification,
             "frontShiftingSystemSpecId": ShiftingSystemSpecification,
+            "midShiftingSystemSpecId": ShiftingSystemSpecification,
             "tireSpecId": ETRTOTireSpecification
         }
 
         SpecRealizer.prototype.entityMap = {
             "rearShiftingSystemSpecId": ShiftingSystem,
             "frontShiftingSystemSpecId": ShiftingSystem,
+            "midShiftingSystemSpecId": ShiftingSystem,
             "tireSpecId": ETRTOTire
         }
 

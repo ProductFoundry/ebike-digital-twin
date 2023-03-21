@@ -8,8 +8,11 @@ define('main', ['js/runner/DataFileReader',
   function (DataFileReader, MachinePropagation, SpecRealizer, Draggable, gsap, BicycleSpecification) {
     gsap.gsap.registerPlugin(Draggable);
     const bs = new BicycleSpecification();
-    let timer;
+    let timer, ebike;
 
+    function printState() {
+      $(".selected-model")[0].innerHTML = JSON.stringify(ebike, null, 2);
+    }
     function getValues(dvalues, u) {
       let values = [], unit = u ? u : 1;
       if (dvalues.indexOf("[") > -1) {
@@ -24,6 +27,7 @@ define('main', ['js/runner/DataFileReader',
       return values;
     }
 
+    $(".loading-indicator").attr("style", "display: none !important")
 
     document.querySelectorAll('.inputslider').forEach(
       (inputslider) => {
@@ -161,11 +165,13 @@ define('main', ['js/runner/DataFileReader',
     const models = bs.getAllSpecs();
     models.forEach(m => ebikeSelector.append("<option value='" + JSON.stringify(m) + "'>" + m.name + "</option>"));
     ebikeSelector.on("change", function (e) {
+      $(".loading-indicator").show();
       const optionSelected = JSON.parse($(this).val());
       const specRealizer = new SpecRealizer(optionSelected.id);
-      const ebike = specRealizer.getEbikeEntity();
+      ebike = specRealizer.getEbikeEntity();
       ebike.init();
-      $(".selected-model")[0].innerHTML = JSON.stringify(ebike, null, 2);
+      $(".loading-indicator").attr("style", "display: none !important");
+      printState();
       // Hide all
       $(".secondary-gear").addClass("d-none");
       $(".derailleur").addClass("d-none");
@@ -177,17 +183,21 @@ define('main', ['js/runner/DataFileReader',
           const cassette = ebike.rearShiftingSystem.cassette.split(",");
           cassette.forEach(function (t, i) {
             $("div.rear-derailleur").append(
-              '<input type="radio" class="btn-check" name="btnradiorg" id="btnradiorg1" ' +
-              'autocomplete="off" checked value="' + t + '"> ' +
-              '<label class="btn btn-outline-primary" for="btnradiorg1">' + (i + 1) + " " + t + '</label> ');
+              '<input type="radio" class="btn-check rear-gear-input" name="btnradiorg" id="btnradiorg' + i + '" ' +
+              'autocomplete="off" value="' + t + '"> ' +
+              '<label class="btn btn-outline-primary" for="btnradiorg' + i + '">' + (i + 1) + " " + t + '</label> ');
 
           })
+          $(".rear-gear-input").on("change", function () {
+            ebike.rearShiftingSystem.selectedGear = parseFloat(this.value);
+            printState();
 
+          })
 
           $(".front-derailleur").addClass("d-none");
           $(".secondary-gear").addClass("d-none");
         } else {
-          // Hub / Box
+          // Hub
           $(".secondary-gear").removeClass("d-none");
           $(".rear.derailleur").addClass("d-none");
           if (ebike.rearShiftingSystem.type === "hub") {
@@ -196,12 +206,14 @@ define('main', ['js/runner/DataFileReader',
             availableSG.forEach((sg, i) => {
               $("div.secondary-gear").append(
                 '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + (i + 1) + '"' +
-                'autocomplete="off" checked value="' + sg + '" >' +
+                'autocomplete="off" value="' + sg + '" >' +
                 '<label class="btn btn-outline-primary" for="btnradiosg' + (i + 1) + '">' + (i + 1) + " " + sg + '</label>'
               )
             })
             $(".secondary-gear-input").on("change", function () {
-              ebike.rearShiftingSystem.selectedGear = Float.parseFloat(this.value);
+              ebike.rearShiftingSystem.selectedGear = parseFloat(this.value);
+              printState();
+
             })
           }
         }
@@ -215,12 +227,31 @@ define('main', ['js/runner/DataFileReader',
           cassette.forEach(function (t, i) {
             $("div.front-derailleur").append(
               '<input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg' + (i + 1) + '" ' +
-              'autocomplete="off" checked value="' + t + '"> ' +
+              'autocomplete="off" value="' + t + '"> ' +
               '<label class="btn btn-outline-primary" for="btnradiofg' + (i + 1) + '">' + (i + 1) + " " + t + '</label> ');
           })
         } else {
-          // Hub or box in the front
+          // Hub in the front
           $(".front-derailleur").addClass("d-none");
+        }
+      }
+      if (ebike.midShiftingSystem) {
+        if (ebike.midShiftingSystem.type === "box") {
+          $(".secondary-gear").removeClass("d-none");
+          const availableSG = ebike.midShiftingSystem.availableGearRatios.split(",");
+          $("div.secondary-gear").empty();
+          availableSG.forEach((sg, i) => {
+            $("div.secondary-gear").append(
+              '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + (i + 1) + '"' +
+              'autocomplete="off" value="' + sg + '" >' +
+              '<label class="btn btn-outline-primary" for="btnradiosg' + (i + 1) + '">' + (i + 1) + " " + sg + '</label>'
+            )
+          })
+          $(".secondary-gear-input").on("change", function () {
+            ebike.midShiftingSystem.selectedGear = parseFloat(this.value);
+            printState();
+
+          })
         }
       }
       const availableSS = ebike.availableSupportSettings.split(",");
@@ -228,12 +259,14 @@ define('main', ['js/runner/DataFileReader',
       availableSS.forEach(ss => {
         $(".support-setting").append(
           '<input type="radio" class="btn-check support-setting-input" name="btnradioss" id="btnradioss' + ss + '"' +
-          'autocomplete = "off" checked value = "' + ss + '" >' +
+          'autocomplete = "off" value = "' + ss + '" >' +
           '<label class="btn btn-outline-primary" for="btnradioss' + ss + '">' + ss + '</label>'
         )
       })
       $(".support-setting-input").on("change", function () {
-        ebike.supportSetting = Integer.parseInt(this.value);
+        ebike.supportSetting = parseInt(this.value);
+        printState();
+
       })
     })
 

@@ -16,6 +16,8 @@ define('js/mechanics/EBike', [], function () {
         this.cadence = null;
         this.torque = null;
         this.rpm = null;
+        this.motorPosition = null;
+        this.torqueSensorPosition = null;
     }
 
     EBike.prototype.addAttribute = function (attribute, value) {
