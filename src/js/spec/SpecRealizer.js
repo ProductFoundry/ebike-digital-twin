@@ -4,16 +4,25 @@ define('js/spec/SpecRealizer',
     ['js/spec/BicycleSpecification',
         'js/spec/ShiftingSystemSpecification',
         'js/spec/ETRTOTireSpecification',
+        'js/spec/TorqueSensorSpecification',
+        'js/spec/CadenceSensorSpecification',
         'js/mechanics/EBike',
         'js/mechanics/ShiftingSystem',
-        'js/mechanics/ETRTOTire'
+        'js/mechanics/ETRTOTire',
+        'js/mechanics/TorqueSensor',
+        'js/mechanics/CadenceSensor',
     ],
     function (BicycleSpecification,
         ShiftingSystemSpecification,
         ETRTOTireSpecification,
+        TorqueSensorSpecification,
+        CadenceSensorSpecification,
         EBike,
         ShiftingSystem,
-        ETRTOTire) {
+        ETRTOTire,
+        TorqueSensor,
+        CadenceSensor
+        ) {
 
         function SpecRealizer(ebikeSpecId) {
             const bs = new BicycleSpecification();
@@ -45,14 +54,18 @@ define('js/spec/SpecRealizer',
             "rearShiftingSystemSpecId": ShiftingSystemSpecification,
             "frontShiftingSystemSpecId": ShiftingSystemSpecification,
             "midShiftingSystemSpecId": ShiftingSystemSpecification,
-            "tireSpecId": ETRTOTireSpecification
+            "tireSpecId": ETRTOTireSpecification,
+            "torqueSensorSpecId": TorqueSensorSpecification,
+            "cadenceSensorSpecId": CadenceSensorSpecification
         }
 
         SpecRealizer.prototype.entityMap = {
             "rearShiftingSystemSpecId": ShiftingSystem,
             "frontShiftingSystemSpecId": ShiftingSystem,
             "midShiftingSystemSpecId": ShiftingSystem,
-            "tireSpecId": ETRTOTire
+            "tireSpecId": ETRTOTire,
+            "torqueSensorSpecId": TorqueSensor,
+            "cadenceSensorSpecId": CadenceSensor
         }
 
         SpecRealizer.prototype.getSpecClass = function (specIdAttribute) {

@@ -189,7 +189,7 @@ define('main', ['js/runner/DataFileReader',
 
           })
           $(".rear-gear-input").on("change", function () {
-            ebike.rearShiftingSystem.selectedGear = parseFloat(this.value);
+            ebike.setSelectedGear("rear", parseFloat(this.value));
             printState();
 
           })
@@ -211,9 +211,8 @@ define('main', ['js/runner/DataFileReader',
               )
             })
             $(".secondary-gear-input").on("change", function () {
-              ebike.rearShiftingSystem.selectedGear = parseFloat(this.value);
+              ebike.setSelectedGear("rear", parseFloat(this.value));
               printState();
-
             })
           }
         }
@@ -226,17 +225,35 @@ define('main', ['js/runner/DataFileReader',
           $("div.front-derailleur").empty();
           cassette.forEach(function (t, i) {
             $("div.front-derailleur").append(
-              '<input type="radio" class="btn-check" name="btnradiofg" id="btnradiofg' + (i + 1) + '" ' +
+              '<input type="radio" class="btn-check front-gear-input" name="btnradiofg" id="btnradiofg' + (i + 1) + '" ' +
               'autocomplete="off" value="' + t + '"> ' +
               '<label class="btn btn-outline-primary" for="btnradiofg' + (i + 1) + '">' + (i + 1) + " " + t + '</label> ');
           })
+          $(".front-gear-input").on("change", function () {
+            ebike.setSelectedGear("front", parseFloat(this.value));
+            printState();
+          })
         } else {
           // Hub in the front
+          $(".secondary-gear").removeClass("d-none");
           $(".front-derailleur").addClass("d-none");
+          const availableSG = ebike.frontShiftingSystem.availableGearRatios.split(",");
+            $("div.secondary-gear").empty();
+            availableSG.forEach((sg, i) => {
+              $("div.secondary-gear").append(
+                '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + (i + 1) + '"' +
+                'autocomplete="off" value="' + sg + '" >' +
+                '<label class="btn btn-outline-primary" for="btnradiosg' + (i + 1) + '">' + (i + 1) + " " + sg + '</label>'
+              )
+            })
+          $(".secondary-gear-input").on("change", function () {
+            ebike.setSelectedGear("front", parseFloat(this.value));
+            printState();
+          })
         }
       }
       if (ebike.midShiftingSystem) {
-        if (ebike.midShiftingSystem.type === "box") {
+        if (ebike.midShiftingSystem.type === "box" || ebike.midShiftingSystem.type === "hub") {
           $(".secondary-gear").removeClass("d-none");
           const availableSG = ebike.midShiftingSystem.availableGearRatios.split(",");
           $("div.secondary-gear").empty();
@@ -248,7 +265,7 @@ define('main', ['js/runner/DataFileReader',
             )
           })
           $(".secondary-gear-input").on("change", function () {
-            ebike.midShiftingSystem.selectedGear = parseFloat(this.value);
+            ebike.setSelectedGear("mid", parseFloat(this.value));
             printState();
 
           })
