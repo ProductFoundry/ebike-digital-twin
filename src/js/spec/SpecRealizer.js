@@ -45,10 +45,10 @@ define('js/spec/SpecRealizer',
                     const Entity = this.getEntityClass(a);
                     const aName = a.substring(0, a.indexOf("SpecId"));
                     const child = this.realize(new Entity(), specification);
-                    entity.addAttribute(a, spec[a]);
-                    entity.addAttribute(aName, child);
+                    entity[a] = spec[a];
+                    entity[aName] = child;
                 } else {
-                    entity.addAttribute(a, spec[a]);
+                    entity[a] = spec[a];;
                 }
             })
             return entity;
@@ -80,13 +80,6 @@ define('js/spec/SpecRealizer',
         SpecRealizer.prototype.getEntityClass = function (specIdAttribute) {
             return this.entityMap[specIdAttribute];
         }
-
-        SpecRealizer.prototype.getRealAttributes = function (spec) {
-            const entity = {};
-            const keys = Object.keys(this.spec).filter(k => k !== "id");
-            keys.forEach(k => entity[k] = spec[k]);
-            return entity;
-        };
 
         SpecRealizer.prototype.getEbikeEntity = function () {
             return this.ebike;

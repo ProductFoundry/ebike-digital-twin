@@ -50,6 +50,7 @@ define('js/mechanics/EBike', [], function () {
         if (position === "front") {
             this.frontShiftingSystem.selectedGear = selectedGear;
             if (this.frontShiftingSystem.type === "derailleur") {
+                this.frontSprocket = selectedGear;
                 this.primaryGearRatio = selectedGear / this.rearSprocket;
             } else {
                 this.secondaryGearRatio = selectedGear;
@@ -57,18 +58,22 @@ define('js/mechanics/EBike', [], function () {
         } else if (position === "rear") {
             this.rearShiftingSystem.selectedGear = selectedGear;
             if (this.rearShiftingSystem.type === "derailleur") {
+                this.rearSprocket = selectedGear;
+                this.secondaryGearRatio = 1;
                 this.primaryGearRatio = this.frontSprocket / selectedGear;
             } else {
                 this.secondaryGearRatio = selectedGear;
             }
         }
+        this.getEffectiveGearRatio();
     }
 
     EBike.prototype.getEffectiveGearRatio = function () {
         if (!this.primaryGearRatio || !this.secondaryGearRatio) {
             console.error("Gear ratio error");
         }
-        return this.primaryGearRatio * this.secondaryGearRatio;
+        this.effectiveGearRatio = this.primaryGearRatio * this.secondaryGearRatio;
+        return this.effectiveGearRatio;
     }
 
     EBike.prototype.setTorqueReading = function () {
