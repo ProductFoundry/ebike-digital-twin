@@ -76,12 +76,17 @@ define('js/mechanics/EBike', [], function () {
         return this.effectiveGearRatio;
     }
 
-    EBike.prototype.setTorqueReading = function () {
+    EBike.prototype.setTorqueReading = function (reading) {
+        this.torqueSensor.setReading(reading);
     }
 
-    EBike.prototype.setCadenceReading = function () {
+    EBike.prototype.setCadenceReading = function (reading) {
+        this.cadenceSensor.reading = reading;
     }
 
+    EBike.prototype.setMotorCurrent = function (reading) {
+        this.motor.setCurrent(reading);
+    }
     return EBike;
 
 })

@@ -64,7 +64,6 @@ define('main', ['js/runner/DataFileReader',
             inputslider.querySelector('.values').appendChild(span);
           }
         );
-
         Draggable.default.create(knob, {
           type: 'x',
           edgeResistance: 1,
@@ -116,6 +115,11 @@ define('main', ['js/runner/DataFileReader',
       );
 
       inputslider.querySelector('input').value = finalValue;
+      if (inputslider.id === "torqueSensor") ebike.setTorqueReading(finalValue);
+      else if (inputslider.id === "cadenceSensor") ebike.setCadenceReading(finalValue);
+      else if (inputslider.id === "currentSensor") ebike.setMotorCurrent(finalValue);
+      else if (inputslider.id === "rpmSensor") ebike.rpm = finalValue;
+      printState();
     }
     $("#start").on("click", function (e) {
       e.stopPropagation();
@@ -238,14 +242,14 @@ define('main', ['js/runner/DataFileReader',
           $(".secondary-gear").removeClass("d-none");
           $(".front-derailleur").addClass("d-none");
           const availableSG = ebike.frontShiftingSystem.availableGearRatios.split(",");
-            $("div.secondary-gear").empty();
-            availableSG.forEach((sg, i) => {
-              $("div.secondary-gear").append(
-                '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + (i + 1) + '"' +
-                'autocomplete="off" value="' + sg + '" >' +
-                '<label class="btn btn-outline-primary" for="btnradiosg' + (i + 1) + '">' + (i + 1) + " " + sg + '</label>'
-              )
-            })
+          $("div.secondary-gear").empty();
+          availableSG.forEach((sg, i) => {
+            $("div.secondary-gear").append(
+              '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + (i + 1) + '"' +
+              'autocomplete="off" value="' + sg + '" >' +
+              '<label class="btn btn-outline-primary" for="btnradiosg' + (i + 1) + '">' + (i + 1) + " " + sg + '</label>'
+            )
+          })
           $(".secondary-gear-input").on("change", function () {
             ebike.setSelectedGear("front", parseFloat(this.value));
             printState();

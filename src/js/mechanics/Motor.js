@@ -5,7 +5,7 @@ define('js/mechanics/Motor', [], function () {
         this.position = null;
         this.current = null;
         this.timestamp = null;
-        this.torqueCoefficient = null;
+        this.torqueCoefficient = 2300;
         this.torque = null;
     }
 

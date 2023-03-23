@@ -14,7 +14,25 @@ define('js/mechanics/TorqueSensor', [], function () {
 
     TorqueSensor.prototype.init = function (ebike) {
         this.motorPosition = ebike.motor.position;
+        this.getMotorTorque = ebike.motor.getTorque;
         this.getEffectiveGearRatio = ebike.getEffectiveGearRatio;
+    }
+
+    TorqueSensor.prototype.setReading = function (reading) {
+        this.reading = reading;
+        if (this.motorPosition === "crank") {
+            if (this.position === "crank") {
+                this.riderTorque = this.reading - this.getMotorTorque();
+            } else if (this.position === "rear") {
+                console.error("Missing calculations");
+            }
+        } else if (this.motorPosition === "rear") {
+            if (this.position === "crank") {
+                this.riderTorque = this.reading;
+            } else if (this.position === "rear") {
+               this.riderTorque = this.getRiderTorque();
+            }
+        }
     }
 
     TorqueSensor.prototype.getRiderTorque = function () {
@@ -41,7 +59,7 @@ define('js/mechanics/TorqueSensor', [], function () {
 
     }
     TorqueSensor.prototype.getMotorTorque = function () {
-        if (this.motor) {
+        if (this.getMotorTorque) {
             const t = this.getMotorTorque();
             if (!t) console.error("Motor torque error: ", t);
             return
