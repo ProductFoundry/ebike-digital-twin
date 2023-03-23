@@ -252,25 +252,6 @@ define('main', ['js/runner/DataFileReader',
           })
         }
       }
-      if (ebike.midShiftingSystem) {
-        if (ebike.midShiftingSystem.type === "box" || ebike.midShiftingSystem.type === "hub") {
-          $(".secondary-gear").removeClass("d-none");
-          const availableSG = ebike.midShiftingSystem.availableGearRatios.split(",");
-          $("div.secondary-gear").empty();
-          availableSG.forEach((sg, i) => {
-            $("div.secondary-gear").append(
-              '<input type="radio" class="btn-check secondary-gear-input" name="btnradiosg" id="btnradiosg' + (i + 1) + '"' +
-              'autocomplete="off" value="' + sg + '" >' +
-              '<label class="btn btn-outline-primary" for="btnradiosg' + (i + 1) + '">' + (i + 1) + " " + sg + '</label>'
-            )
-          })
-          $(".secondary-gear-input").on("change", function () {
-            ebike.setSelectedGear("mid", parseFloat(this.value));
-            printState();
-
-          })
-        }
-      }
       const availableSS = ebike.availableSupportSettings.split(",");
       $(".support-setting").empty();
       availableSS.forEach(ss => {

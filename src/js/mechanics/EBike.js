@@ -7,7 +7,6 @@ define('js/mechanics/EBike', [], function () {
         this.frontSprocket = null;
         this.rearSprocket = null;
         this.rearShiftingSystemSpecId = null;
-        this.motorPosition = null;
         this.crankLength = null;
         this.tireSpecId = null;
         this.tire = null;
@@ -16,8 +15,6 @@ define('js/mechanics/EBike', [], function () {
         this.cadence = null;
         this.torque = null;
         this.rpm = null;
-        this.motorPosition = null;
-        this.torqueSensorPosition = null;
     }
 
     EBike.prototype.addAttribute = function (attribute, value) {
@@ -25,6 +22,12 @@ define('js/mechanics/EBike', [], function () {
     }
 
     EBike.prototype.init = function () {
+        this.torqueSensor.position = this.torqueSensorPosition;
+        this.cadenceSensor.position = this.cadenceSensorPosition;
+        this.motor.position = this.motorPosition;
+        delete this.torqueSensorPosition;
+        delete this.cadenceSensorPosition;
+        delete this.motorPosition;
         if (this.rearShiftingSystem) {
             if (this.rearShiftingSystem.type === "derailleur") {
                 this.rearSprocket = this.rearShiftingSystem.selectedGear;
@@ -35,8 +38,12 @@ define('js/mechanics/EBike', [], function () {
                 this.frontSprocket = this.frontShiftingSystem.selectedGear;
             }
         }
-        this.primaryGearRatio = this.frontSprocket / this.rearSprocket;
+        if (this.frontSprocket && this.rearSprocket) {
+            // Else it could be the rig with given PGR
+            this.primaryGearRatio = this.frontSprocket / this.rearSprocket;
+        }
         this.tire.init();
+        this.torqueSensor.init(this);
     }
 
     EBike.prototype.setSelectedGear = function (position, selectedGear) {
@@ -44,16 +51,24 @@ define('js/mechanics/EBike', [], function () {
             this.frontShiftingSystem.selectedGear = selectedGear;
             if (this.frontShiftingSystem.type === "derailleur") {
                 this.primaryGearRatio = selectedGear / this.rearSprocket;
+            } else {
+                this.secondaryGearRatio = selectedGear;
             }
         } else if (position === "rear") {
             this.rearShiftingSystem.selectedGear = selectedGear;
             if (this.rearShiftingSystem.type === "derailleur") {
                 this.primaryGearRatio = this.frontSprocket / selectedGear;
+            } else {
+                this.secondaryGearRatio = selectedGear;
             }
-        } else {
-            // mid
-            this.midShiftingSystem.selectedGear = selectedGear;
         }
+    }
+
+    EBike.prototype.getEffectiveGearRatio = function () {
+        if (!this.primaryGearRatio || !this.secondaryGearRatio) {
+            console.error("Gear ratio error");
+        }
+        return this.primaryGearRatio * this.secondaryGearRatio;
     }
 
     EBike.prototype.setTorqueReading = function () {

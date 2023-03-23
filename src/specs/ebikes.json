@@ -6,7 +6,7 @@
             "frontSprockets": 45,
             "rearSprockets": 18,
             "rearShiftingSystemSpecId": "sturmey archer 7 speed",
-            "motorPosition": "middle",
+            "motorPosition": "crank",
             "crankLength": 170,
             "tireSpecId": "40-622",
             "availableSupportSettings": "1,2,3,4,5"
