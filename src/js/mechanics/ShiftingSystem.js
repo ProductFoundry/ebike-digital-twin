@@ -8,10 +8,6 @@ define('js/mechanics/ShiftingSystem', [], function () {
         this.selectedGear = null;
     }
 
-    ShiftingSystem.prototype.addAttribute = function (attribute, value) {
-        this[attribute] = value;
-    }
-
     ShiftingSystem.prototype.getSecondaryGearRatio = function () {
         if (this.type === "hub" || this.type === "box") {
             return this.selectedGear;

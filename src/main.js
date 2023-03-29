@@ -69,9 +69,9 @@ define('main', ['js/runner/DataFileReader',
           edgeResistance: 1,
           bounds: area,
           throwProps: false,
-          onDrag: function () {
-            handleInputslider(this, false, unit);
-          },
+          // onDrag: function () {
+          //   handleInputslider(this, false, unit);
+          // },
           onDragEnd: function () {
             handleInputslider(this, false, unit);
           }
@@ -174,7 +174,6 @@ define('main', ['js/runner/DataFileReader',
       const specRealizer = new SpecRealizer(optionSelected.id);
       ebike = specRealizer.getEbikeEntity();
       ebike.init();
-      $(".loading-indicator").attr("style", "display: none !important");
       printState();
       // Hide all
       $(".secondary-gear").addClass("d-none");
@@ -270,6 +269,8 @@ define('main', ['js/runner/DataFileReader',
         printState();
 
       })
+      $(".loading-indicator").attr("style", "display: none !important");
+
     })
 
     const fileInput = $(".files")

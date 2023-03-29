@@ -5,21 +5,15 @@ define('js/mechanics/Motor', [], function () {
         this.position = null;
         this.current = null;
         this.timestamp = null;
-        this.torqueCoefficient = 2300;
         this.torque = null;
     }
 
-    Motor.prototype.addAttribute = function (attribute, value) {
-        this[attribute] = value;
-    }
-
     Motor.prototype.init = function () {
+        this.torqueCoefficient = parseInt(this.peakTorque) / parseInt(this.peakCurrent);
     }
 
     Motor.prototype.getTorque = function () {
-        const ktsi = (this.torqueCoefficient * 2 * 3.14)/60 // rpm/v to rad/s
-        const kv = 1/ktsi;
-        const torque = kv * this.current;
+        const torque = this.torqueCoefficient * this.current;
         return torque;
     }
 

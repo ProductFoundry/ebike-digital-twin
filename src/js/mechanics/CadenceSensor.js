@@ -7,13 +7,6 @@ define('js/mechanics/CadenceSensor', [], function () {
         this.timestamp = null;
     }
 
-    CadenceSensor.prototype.addAttribute = function (attribute, value) {
-        this[attribute] = value;
-    }
-
-    CadenceSensor.prototype.init = function () {
-    }
-
     return CadenceSensor;
 
 })
